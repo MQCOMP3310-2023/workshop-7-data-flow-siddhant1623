@@ -9,9 +9,14 @@
 import java
 
  predicate inAssignment(Expr e){
-   exists (AssignExpr a| a.getAChildExpr*() = e) 
+   exists (AssignExpr a| a.getAChildExpr*() = e) or exists (
+    LocalVariableDeclExpr a| a.getAchildExpor*() = e)
+   
+ }
+ class StringConcat extends AddExpr {
+  StringConcat() { this.getType().toString()="String" }
  }
  
- from MethodAccess call
- where inAssignment(call)
- select call, "Used in an assignment."
+ from MethodAccess str
+ where inAssignment(str)
+ select str, "Addition used in assignment or declaration."
